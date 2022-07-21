@@ -10,16 +10,16 @@
 
             <div class="sheet__content dough">
               <label
-                v-for="item in pizza.dough"
+                v-for="item in dough"
                 :key="item.id"
-                class="dough__input dough__input--light"
+                :class="`dough__input dough__input--${item.value}`"
               >
                 <input
                   type="radio"
                   name="dought"
                   value="light"
                   class="visually-hidden"
-                  checked
+                  :checked="item.id === 1"
                 />
                 <b>{{ item.name }}</b>
                 <span>{{ item.description }}</span>
@@ -34,19 +34,18 @@
 
             <div class="sheet__content diameter">
               <label
-                v-for="item in pizza.sizes"
-                :key="item.id"
-                class="diameter__input"
-                :class="`diameter__input--${item.type}`"
+                v-for="size in sizes"
+                :key="size.id"
+                :class="`diameter__input diameter__input--${size.value}`"
               >
                 <input
                   type="radio"
                   name="diameter"
-                  :value="item.type"
+                  :value="size.type"
                   class="visually-hidden"
-                  :checked="item.checked"
+                  :checked="size.id === 2"
                 />
-                <span>{{ item.name }}</span>
+                <span>{{ size.name }}</span>
               </label>
             </div>
           </div>
@@ -63,7 +62,7 @@
                 <p>Основной соус:</p>
 
                 <label
-                  v-for="sauce in pizza.sauces"
+                  v-for="sauce in sauces"
                   :key="sauce.id"
                   class="radio ingredients__input"
                 >
@@ -71,7 +70,7 @@
                     type="radio"
                     name="sauce"
                     :value="sauce.value"
-                    :checked="sauce.checked"
+                    :checked="sauce.id === 1"
                   />
                   <span>{{ sauce.name }}</span>
                 </label>
@@ -82,11 +81,11 @@
 
                 <ul class="ingredients__list">
                   <li
-                    v-for="ingredient in pizza.ingredients"
+                    v-for="ingredient in ingredients"
                     :key="ingredient.id"
                     class="ingredients__item"
                   >
-                    <span :class="`filling filling--${ingredient.type}`">
+                    <span :class="`filling filling--${ingredient.value}`">
                       {{ ingredient.name }}
                     </span>
                     <div class="counter counter--orange ingredients__counter">
@@ -148,13 +147,22 @@
 </template>
 
 <script>
-import pizza from "@/static/pizza.json";
+import { ingredients, sauces, sizes, dough } from "@/static/pizza.json";
+import {
+  normalizeIngredients,
+  normalizeSauce,
+  normalizeSize,
+  normalizeDough,
+} from "@/common/helpers";
 
 export default {
   name: "Index",
   data() {
     return {
-      pizza,
+      ingredients: normalizeIngredients(ingredients),
+      sauces: normalizeSauce(sauces),
+      sizes: normalizeSize(sizes),
+      dough: normalizeDough(dough),
     };
   },
 };
