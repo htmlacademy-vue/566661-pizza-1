@@ -9,19 +9,20 @@ export const normalizeIngredients = (ingredients) => {
       const nameImg = tempArray[tempArray.length - 1].split(".");
       return nameImg[0];
     })(),
+    count: 0,
   }));
 };
 
 // Нормализация соусов
-export const normalizeSauce = (sauces) => {
+export const normalizeSauces = (sauces) => {
   return sauces.map((sauceItem) => ({
     ...sauceItem,
-    nameEn: SAUCE_LIST.find(({ name }) => sauces.name === name)?.nameEn,
+    value: SAUCE_LIST.find(({ name }) => sauceItem.name === name)?.value,
   }));
 };
 
 // Добавляет размер пиццы в словах
-export const normalizeSize = (sizes) => {
+export const normalizeSizes = (sizes) => {
   return sizes.map((sizeItem) => ({
     ...sizeItem,
     value: SIZE_LIST.find(({ name }) => sizeItem.name === name)?.value,

@@ -3,7 +3,7 @@
     <div class="layout__sidebar sidebar">
       <a href="index.html" class="logo layout__logo">
         <img
-          src="../assets/img/logo.svg"
+          src="../../assets/img/logo.svg"
           alt="V!U!E! Pizza logo"
           width="90"
           height="40"
@@ -41,7 +41,7 @@
           <li class="order__item">
             <div class="product">
               <img
-                src="../assets/img/product.svg"
+                src="../../assets/img/product.svg"
                 class="product__img"
                 width="56"
                 height="56"
@@ -65,7 +65,7 @@
           <li class="order__item">
             <div class="product">
               <img
-                src="../assets/img/product.svg"
+                src="../../assets/img/product.svg"
                 class="product__img"
                 width="56"
                 height="56"
@@ -88,7 +88,7 @@
         <ul class="order__additional">
           <li>
             <img
-              src="../assets/img/cola.svg"
+              src="../../assets/img/cola.svg"
               width="20"
               height="30"
               alt="Coca-Cola 0,5 литра"
@@ -100,7 +100,7 @@
           </li>
           <li>
             <img
-              src="../assets/img/sauce.svg"
+              src="../../assets/img/sauce.svg"
               width="20"
               height="30"
               alt="Острый соус"
@@ -109,7 +109,7 @@
           </li>
           <li>
             <img
-              src="../assets/img/potato.svg"
+              src="../../assets/img/potato.svg"
               width="20"
               height="30"
               alt="Картошка из печи"
@@ -148,7 +148,7 @@
           <li class="order__item">
             <div class="product">
               <img
-                src="../assets/img/product.svg"
+                src="../../assets/img/product.svg"
                 class="product__img"
                 width="56"
                 height="56"
@@ -169,7 +169,7 @@
           <li class="order__item">
             <div class="product">
               <img
-                src="../assets/img/product.svg"
+                src="../../assets/img/product.svg"
                 class="product__img"
                 width="56"
                 height="56"
@@ -192,7 +192,7 @@
         <ul class="order__additional">
           <li>
             <img
-              src="../assets/img/cola.svg"
+              src="../../assets/img/cola.svg"
               width="20"
               height="30"
               alt="Coca-Cola 0,5 литра"
@@ -204,7 +204,7 @@
           </li>
           <li>
             <img
-              src="../assets/img/sauce.svg"
+              src="../../assets/img/sauce.svg"
               width="20"
               height="30"
               alt="Острый соус"
@@ -216,7 +216,7 @@
           </li>
           <li>
             <img
-              src="../assets/img/potato.svg"
+              src="../../assets/img/potato.svg"
               width="20"
               height="30"
               alt="Картошка из печи"
