@@ -12,21 +12,28 @@
     </label>
 
     <div class="content__constructor">
-      <div class="pizza pizza--foundation--big-tomato">
-        <div class="pizza__wrapper">
-          <div class="pizza__filling pizza__filling--ananas"></div>
-          <div class="pizza__filling pizza__filling--bacon"></div>
-          <div class="pizza__filling pizza__filling--cheddar"></div>
-        </div>
-      </div>
+      <app-drop @drop="$emit('setIngredient', $event.ingredient)">
+        <div class="pizza" :class="`pizza--foundation--${size}-${sauce}`">
+          <div class="pizza__wrapper">
+            <template v-for="ingredient in ingredients">
+              <div
+                :key="ingredient.name"
+                v-if="ingredient.count > 0"
+                class="pizza__filling"
+                :class="`pizza__filling--${ingredient.value}`"
+              ></div>
+            </template>
+          </div></div
+      ></app-drop>
     </div>
 
-    <BuilderPriceCounter :price="price" @ready="start" />
+    <BuilderPriceCounter :price="price" @ready="total" />
   </div>
 </template>
 
 <script>
 import BuilderPriceCounter from "@/modules/builder/components/BuilderPriceCounter";
+import AppDrop from "@/common/components/AppDrop";
 export default {
   name: "BuilderPizzaView",
   data() {
@@ -41,15 +48,28 @@ export default {
       type: String,
       default: "",
     },
+    size: {
+      type: String,
+      required: true,
+    },
+    sauce: {
+      type: String,
+      required: true,
+    },
+    ingredients: {
+      type: Array,
+      required: true,
+    },
   },
   components: {
     BuilderPriceCounter,
+    AppDrop,
   },
   methods: {
     setName() {
       this.$emit("setNamePizza", this.namePizza);
     },
-    start(val) {
+    total(val) {
       this.ready = val;
     },
   },

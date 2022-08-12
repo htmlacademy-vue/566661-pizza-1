@@ -9,20 +9,25 @@
           :changeDough="currentDough"
         />
         <BuilderSizeSelector
-          :sizes="sizeList"
+          :sizes="sizesList"
           :sizePizza="currentSize"
           @changeSize="currentSize = $event"
         />
         <BuilderIngredientsSelector
-          :sauces="sauceList"
-          :ingredients="ingredientList"
+          :sauces="saucesList"
+          :ingredients="ingredientsList"
           :currentSauce="currentSauce"
           @setCurrentSauce="currentSauce = $event"
-          @updateIngredients="ingredientList = $event"
+          @setIngredient="addIngredient"
+          @removeIngredient="removeIngredient"
         />
         <BuilderPizzaView
           :name="namePizza"
           @setNamePizza="namePizza = $event"
+          @setIngredient="addIngredient"
+          :ingredients="ingredientsList"
+          :size="currentSize"
+          :sauce="currentSauce"
         />
       </div>
     </form>
@@ -52,20 +57,44 @@ export default {
   },
 
   data() {
-    //TODO не совсем понял, почему при таком объявлении работает, а если указать сразу в return то не работает
-    const normalizedDough = normalizeDough(dough);
-    const normalizeSize = normalizeSizes(sizes);
-    const normalizeSauce = normalizeSauces(sauces);
     return {
-      doughList: normalizedDough,
-      sizeList: normalizeSize,
-      sauceList: normalizeSauce,
-      ingredientList: normalizeIngredients(ingredients),
+      doughList: null,
+      sizesList: null,
+      saucesList: null,
+      ingredientsList: null,
       namePizza: "",
-      currentDough: normalizedDough[0].value,
-      currentSize: normalizeSize[1].value,
-      currentSauce: normalizeSauce[0].value,
+      currentDough: null,
+      currentSize: null,
+      currentSauce: null,
     };
+  },
+  created() {
+    this.addValue();
+    this.addCurrentElements();
+  },
+  methods: {
+    addValue() {
+      this.doughList = normalizeDough(dough);
+      this.sizesList = normalizeSizes(sizes);
+      this.saucesList = normalizeSauces(sauces);
+      this.ingredientsList = normalizeIngredients(ingredients);
+    },
+    addCurrentElements() {
+      this.currentDough = normalizeDough(dough)[0].value;
+      this.currentSize = normalizeSizes(sizes)[1].value;
+      this.currentSauce = normalizeSauces(sauces)[0].value;
+    },
+    addIngredient(value) {
+      console.log(value);
+      const idx = this.ingredientsList.findIndex((el) => el.value === value);
+      this.ingredientsList[idx].count++;
+    },
+    removeIngredient(value) {
+      const idx = this.ingredientsList.findIndex((el) => el.value === value);
+      if (this.ingredientsList[idx].count > 0) {
+        this.ingredientsList[idx].count--;
+      }
+    },
   },
 };
 </script>

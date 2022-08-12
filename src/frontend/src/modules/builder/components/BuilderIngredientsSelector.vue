@@ -27,13 +27,15 @@
                 :key="ingredient.id"
                 class="ingredients__item"
               >
-                <span :class="`filling filling--${ingredient.value}`">
-                  {{ ingredient.name }}
-                </span>
+                <app-drag :drag-element="ingredient.value">
+                  <span :class="`filling filling--${ingredient.value}`">
+                    {{ ingredient.name }}
+                  </span>
+                </app-drag>
                 <ItemCounter
                   class="counter counter--orange ingredients__counter"
-                  @minusCount="removeIngredient(ingredient.value)"
-                  @plusCount="addIngredient(ingredient.value)"
+                  @minusCount="$emit('removeIngredient', ingredient.value)"
+                  @plusCount="$emit('setIngredient', ingredient.value)"
                   :value="ingredient.value"
                   :count="ingredient.count"
                 />
@@ -49,11 +51,13 @@
 <script>
 import RadioButton from "@/common/components/RadioButton";
 import ItemCounter from "@/common/components/ItemCounter";
+import AppDrag from "@/common/components/AppDrag";
 export default {
   name: "BuilderIngredientsSelector",
   components: {
     RadioButton,
     ItemCounter,
+    AppDrag,
   },
   props: {
     sauces: {
@@ -67,20 +71,6 @@ export default {
     currentSauce: {
       type: String,
       required: true,
-    },
-  },
-  methods: {
-    addIngredient(value) {
-      const idx = this.ingredients.findIndex((el) => el.value === value);
-      this.ingredients[idx].count++;
-      this.$emit("updateIngredients", this.ingredients);
-    },
-    removeIngredient(value) {
-      const idx = this.ingredients.findIndex((el) => el.value === value);
-      if (this.ingredients[idx].count > 0) {
-        this.ingredients[idx].count--;
-        this.$emit("updateIngredients", this.ingredients);
-      }
     },
   },
 };
