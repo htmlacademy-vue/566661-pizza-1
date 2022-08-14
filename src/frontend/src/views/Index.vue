@@ -26,8 +26,8 @@
           @setNamePizza="namePizza = $event"
           @setIngredient="addIngredient"
           :ingredients="ingredientsList"
-          :size="currentSize"
           :sauce="currentSauce"
+          :typeDough="getTypeDough"
         />
       </div>
     </form>
@@ -85,7 +85,6 @@ export default {
       this.currentSauce = normalizeSauces(sauces)[0].value;
     },
     addIngredient(value) {
-      console.log(value);
       const idx = this.ingredientsList.findIndex((el) => el.value === value);
       this.ingredientsList[idx].count++;
     },
@@ -94,6 +93,11 @@ export default {
       if (this.ingredientsList[idx].count > 0) {
         this.ingredientsList[idx].count--;
       }
+    },
+  },
+  computed: {
+    getTypeDough() {
+      return this.currentDough === "light" ? "small" : "big";
     },
   },
 };

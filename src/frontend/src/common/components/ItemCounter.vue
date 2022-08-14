@@ -8,11 +8,18 @@
     >
       <span class="visually-hidden">{{ textBtnFirst }}</span>
     </button>
-    <input type="text" name="counter" class="counter__input" v-model="count" />
+    <input
+      type="text"
+      name="counter"
+      class="counter__input"
+      v-model="count"
+      readonly
+    />
     <button
       type="button"
       class="counter__button counter__button--plus"
       @click="$emit('plusCount')"
+      :disabled="!isDisabled"
     >
       <span class="visually-hidden">{{ textBtnSecond }}</span>
     </button>
@@ -39,15 +46,17 @@ export default {
       type: Number,
       default: 0,
     },
-  },
-  data() {
-    return {
-      currentCount: this.count,
-    };
+    maxLengthCount: {
+      type: Number,
+      default: 3,
+    },
   },
   computed: {
     getCount() {
       return !this.count > 0;
+    },
+    isDisabled() {
+      return this.count < this.maxLengthCount;
     },
   },
 };

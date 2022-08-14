@@ -13,14 +13,14 @@
 
     <div class="content__constructor">
       <app-drop @drop="$emit('setIngredient', $event.ingredient)">
-        <div class="pizza" :class="`pizza--foundation--${size}-${sauce}`">
+        <div class="pizza" :class="`pizza--foundation--${typeDough}-${sauce}`">
           <div class="pizza__wrapper">
             <template v-for="ingredient in ingredients">
               <div
                 :key="ingredient.name"
                 v-if="ingredient.count > 0"
                 class="pizza__filling"
-                :class="`pizza__filling--${ingredient.value}`"
+                :class="getPizzaClasses(ingredient.value, ingredient.count)"
               ></div>
             </template>
           </div></div
@@ -48,11 +48,11 @@ export default {
       type: String,
       default: "",
     },
-    size: {
+    sauce: {
       type: String,
       required: true,
     },
-    sauce: {
+    typeDough: {
       type: String,
       required: true,
     },
@@ -71,6 +71,13 @@ export default {
     },
     total(val) {
       this.ready = val;
+    },
+    getPizzaClasses(ingredient, count) {
+      return {
+        [`pizza__filling--${ingredient}`]: ingredient,
+        "pizza__filling--second": count === 2,
+        "pizza__filling--third": count === 3,
+      };
     },
   },
 };
