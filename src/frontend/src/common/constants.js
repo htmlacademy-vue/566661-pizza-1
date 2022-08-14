@@ -1,11 +1,11 @@
 export const SAUCE_LIST = [
   {
     name: "Томатный",
-    nameEn: "tomato",
+    value: "tomato",
   },
   {
     name: "Сливочный",
-    nameEn: "creamy",
+    value: "creamy",
   },
 ];
 
