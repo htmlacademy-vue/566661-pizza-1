@@ -27,7 +27,10 @@
                 :key="ingredient.id"
                 class="ingredients__item"
               >
-                <app-drag :drag-element="ingredient.value">
+                <app-drag
+                  :drag-element="ingredient.value"
+                  :isDraggable="ingredient.count < 3"
+                >
                   <span :class="`filling filling--${ingredient.value}`">
                     {{ ingredient.name }}
                   </span>

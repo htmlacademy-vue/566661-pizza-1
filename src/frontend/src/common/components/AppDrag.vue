@@ -1,5 +1,9 @@
 <template>
-  <div :class="$style.drag" :draggable="true" @dragstart.self="onDrag">
+  <div
+    :class="{ [$style.drag]: isDraggable }"
+    :draggable="isDraggable"
+    @dragstart.self="onDrag"
+  >
     <slot />
   </div>
 </template>
@@ -11,6 +15,10 @@ export default {
     dragElement: {
       type: String,
       required: true,
+    },
+    isDraggable: {
+      type: Boolean,
+      default: true,
     },
   },
   methods: {
