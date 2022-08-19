@@ -13,7 +13,10 @@
 
     <div class="content__constructor">
       <app-drop @drop="$emit('setIngredient', $event.ingredient)">
-        <div class="pizza" :class="`pizza--foundation--${typeDough}-${sauce}`">
+        <div
+          class="pizza"
+          :class="`pizza--foundation--${typeDough.value}-${sauce.value}`"
+        >
           <div class="pizza__wrapper">
             <template v-for="ingredient in ingredients">
               <div
@@ -27,7 +30,7 @@
       ></app-drop>
     </div>
 
-    <BuilderPriceCounter :price="price" @ready="total" />
+    <BuilderPriceCounter :price="calculatePrice" @ready="total" />
   </div>
 </template>
 
@@ -38,9 +41,7 @@ export default {
   name: "BuilderPizzaView",
   data() {
     return {
-      price: 0,
       namePizza: this.name,
-      ready: false,
     };
   },
   props: {
@@ -49,15 +50,19 @@ export default {
       default: "",
     },
     sauce: {
-      type: String,
+      type: Object,
       required: true,
     },
     typeDough: {
-      type: String,
+      type: Object,
       required: true,
     },
     ingredients: {
       type: Array,
+      required: true,
+    },
+    size: {
+      type: Object,
       required: true,
     },
   },
@@ -78,6 +83,20 @@ export default {
         "pizza__filling--second": count === 2,
         "pizza__filling--third": count === 3,
       };
+    },
+  },
+  computed: {
+    calculatePrice() {
+      /* eslint-disable */
+      return this.size.price * (this.typeDough.price + this.sauce.price + this.countIngredients);
+      /* eslint-enable */
+    },
+    countIngredients() {
+      let num = 0;
+      this.ingredients.forEach((item) => {
+        num += item.count;
+      });
+      return num;
     },
   },
 };
