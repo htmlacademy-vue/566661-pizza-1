@@ -49,7 +49,7 @@ import {
 import { dough, sizes, sauces, ingredients } from "@/static/pizza.json";
 
 export default {
-  name: "Index",
+  name: "IndexHome",
   components: {
     BuilderSizeSelector,
     BuilderIngredientsSelector,
@@ -127,3 +127,5 @@ export default {
   },
 };
 </script>
+
+<style scoped></style>

@@ -14,7 +14,7 @@
           <li class="cart-list__item">
             <div class="product cart-list__product">
               <img
-                src="../../assets/img/product.svg"
+                src="@/assets/img/product.svg"
                 class="product__img"
                 width="56"
                 height="56"
@@ -62,7 +62,7 @@
           <li class="cart-list__item">
             <div class="product cart-list__product">
               <img
-                src="../../assets/img/product.svg"
+                src="@/assets/img/product.svg"
                 class="product__img"
                 width="56"
                 height="56"
@@ -206,8 +206,8 @@
     </main>
     <section class="footer">
       <div class="footer__more">
-        <a href="#" class="button button--border button--arrow"
-          >Хочу еще одну</a
+        <router-link to="/" class="button button--border button--arrow"
+          >Хочу еще одну</router-link
         >
       </div>
       <p class="footer__text">
@@ -227,7 +227,7 @@
 <script>
 import misc from "@/static/misc.json";
 export default {
-  name: "AppCart",
+  name: "TheCart",
   data() {
     return {
       misc,

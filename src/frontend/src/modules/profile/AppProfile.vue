@@ -1,19 +1,5 @@
 <template>
   <main class="layout">
-    <div class="layout__sidebar sidebar">
-      <a href="index.html" class="logo layout__logo">
-        <img
-          src="img/logo.svg"
-          alt="V!U!E! Pizza logo"
-          width="90"
-          height="40"
-        />
-      </a>
-
-      <a class="layout__link" href="#">История заказов</a>
-      <a class="layout__link layout__link--active" href="#">Мои данные</a>
-    </div>
-
     <div class="layout__content">
       <div class="layout__title">
         <h1 class="title title--big">Мои данные</h1>
@@ -23,22 +9,27 @@
         <picture>
           <source
             type="image/webp"
-            srcset="img/users/user5@2x.webp 1x, img/users/user5@4x.webp 2x"
+            srcset="
+              @/assets/img/users/user5@2x.webp 1x,
+              @/assets/img/users/user5@4x.webp 2x
+            "
           />
           <img
-            src="img/users/user5@2x.jpg"
-            srcset="img/users/user5@4x.jpg"
+            src="@/assets/img/users/user5@2x.jpg"
+            srcset="@/assets/img/users/user5@4x.jpg"
             alt="Василий Ложкин"
             width="72"
             height="72"
           />
         </picture>
-        <div class="user__name">
-          <span>{{ user.name }}</span>
+        <div :class="['user__wrapper']">
+          <div class="user__name">
+            <span>{{ user.name }}</span>
+          </div>
+          <p class="user__phone">
+            Контактный телефон: <span>{{ user.phone }}</span>
+          </p>
         </div>
-        <p class="user__phone">
-          Контактный телефон: <span>{{ user.phone }}</span>
-        </p>
       </div>
 
       <div class="layout__address">
@@ -143,7 +134,7 @@
 <script>
 import user from "@/static/user.json";
 export default {
-  name: "AppUserData",
+  name: "AppProfile",
   data() {
     return {
       user,
@@ -152,4 +143,15 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+.user {
+  &__wrapper {
+    text-align: left;
+    margin-left: 1em;
+  }
+  &__name {
+    margin-bottom: 0.5em;
+    margin-left: revert;
+  }
+}
+</style>
