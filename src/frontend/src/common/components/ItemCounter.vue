@@ -38,10 +38,6 @@ export default {
       type: String,
       default: "Больше",
     },
-    value: {
-      type: String,
-      required: true,
-    },
     count: {
       type: Number,
       default: 0,
@@ -53,7 +49,7 @@ export default {
   },
   computed: {
     getCount() {
-      return !this.count > 0;
+      return !this.count >= this.count;
     },
     isDisabled() {
       return this.count < this.maxLengthCount;

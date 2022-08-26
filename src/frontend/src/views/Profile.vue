@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import AppUserData from "../modules/profile/AppProfile";
+import AppUserData from "../modules/profile/components/AppProfile";
 export default {
   name: "Profile",
   components: {

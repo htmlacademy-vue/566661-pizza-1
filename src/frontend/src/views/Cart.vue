@@ -1,14 +1,14 @@
 <template>
   <div>
-    <TheCart />
+    <AppCart />
   </div>
 </template>
 
 <script>
-import TheCart from "../modules/cart/components/TheCart";
+import AppCart from "../modules/cart/components/AppCart";
 export default {
   name: "Cart",
-  components: { TheCart },
+  components: { AppCart },
 };
 </script>
 

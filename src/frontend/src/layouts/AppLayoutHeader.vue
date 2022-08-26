@@ -14,7 +14,9 @@
       <router-link to="/cart">0 ₽</router-link>
     </div>
     <div class="header__user">
-      <a v-if="!isAuth" href="#" class="header__login"><span>Войти</span></a>
+      <router-link v-if="!isAuth" to="/login" class="header__login"
+        ><span>Войти</span></router-link
+      >
       <template v-else>
         <a href="user-data.html">
           <picture>

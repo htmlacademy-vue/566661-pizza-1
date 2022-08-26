@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import AppOrders from "../layouts/temp/AppOrders";
+import AppOrders from "../modules/orders/components/AppOrders";
 export default {
   name: "Orders",
   components: {
