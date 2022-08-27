@@ -30,7 +30,8 @@ export default [
     meta: { layout: "AppLayoutMain" },
   },
   {
-    path: "/login",
+    //TODO можно как то вывести по другому еще компонент на отдельной странице??? Можно хотя бы ссылку кинуть плиз, чтобы не объяснять, если можно по другому
+    path: "/account/login",
     name: "Login",
     component: () => import("../views/Login"),
   },
