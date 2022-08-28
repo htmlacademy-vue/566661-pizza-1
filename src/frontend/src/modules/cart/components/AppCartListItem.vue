@@ -18,7 +18,11 @@
       </div>
     </div>
 
-    <ItemCounter :count="1" :class="['counter cart-list__counter']" />
+    <ItemCounter
+      :min-count="1"
+      :count="1"
+      :class="['counter cart-list__counter']"
+    />
     <div class="cart-list__price">
       <b>782 ₽</b>
     </div>

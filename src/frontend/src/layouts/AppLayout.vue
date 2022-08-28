@@ -10,9 +10,6 @@
 const defaultLayout = "AppLayoutDefault";
 export default {
   name: "AppLayout",
-  components: {
-    defaultLayout,
-  },
   computed: {
     layout() {
       let layout = this.$route.meta.layout || defaultLayout;

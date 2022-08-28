@@ -30,7 +30,7 @@
       ></app-drop>
     </div>
 
-    <BuilderPriceCounter :price="calculatePrice" @ready="total" />
+    <BuilderPriceCounter :price="price" @ready="total" />
   </div>
 </template>
 
@@ -86,15 +86,15 @@ export default {
     },
   },
   computed: {
-    calculatePrice() {
+    price() {
       /* eslint-disable */
-      return this.size.price * (this.typeDough.price + this.sauce.price + this.countIngredients);
+      return this.size.multiplier * (this.typeDough.price + this.sauce.price + this.countIngredients);
       /* eslint-enable */
     },
     countIngredients() {
       let num = 0;
       this.ingredients.forEach((item) => {
-        num += item.count;
+        num += item.count * item.price;
       });
       return num;
     },

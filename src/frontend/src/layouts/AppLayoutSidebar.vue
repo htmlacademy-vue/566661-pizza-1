@@ -6,15 +6,11 @@
         alt="V!U!E! Pizza logo"
         width="90"
         height="40"
+        style="opacity: 0"
       />
     </router-link>
     <template v-for="sidebar in sidebars">
-      <router-link
-        :key="sidebar.to"
-        class="layout__link"
-        :class="{ ['layout__link--active']: getActiveLink === sidebar.to }"
-        :to="sidebar.to"
-      >
+      <router-link :key="sidebar.to" class="layout__link" :to="sidebar.to">
         {{ sidebar.text }}
       </router-link>
     </template>
@@ -36,10 +32,19 @@ export default {
       },
     ],
   }),
-  computed: {
-    getActiveLink() {
-      return this.$route.path;
-    },
-  },
 };
 </script>
+
+<style scoped>
+.router-link-active {
+  background-color: rgba(65, 182, 25, 0.1);
+  font-size: 14px;
+  font-weight: 700;
+  font-style: normal;
+  line-height: 16px;
+  display: block;
+  padding: 8px 14px;
+  transition: 0.3s;
+  color: #000000;
+}
+</style>

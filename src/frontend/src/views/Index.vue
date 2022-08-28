@@ -113,7 +113,7 @@ export default {
       );
       return {
         value: this.currentSize,
-        price: this.sizesList[idx].multiplier,
+        multiplier: this.sizesList[idx].multiplier,
       };
     },
     getSauce() {
