@@ -38,25 +38,25 @@ export default {
       type: String,
       default: "Больше",
     },
-    value: {
-      type: String,
-      required: true,
-    },
     count: {
       type: Number,
       default: 0,
     },
-    maxLengthCount: {
+    maxCount: {
       type: Number,
       default: 3,
+    },
+    minCount: {
+      type: Number,
+      default: 0,
     },
   },
   computed: {
     getCount() {
-      return !this.count > 0;
+      return this.count === this.minCount;
     },
     isDisabled() {
-      return this.count < this.maxLengthCount;
+      return this.count < this.maxCount;
     },
   },
 };
