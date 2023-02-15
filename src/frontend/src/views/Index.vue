@@ -5,31 +5,23 @@
       <div class="content__wrapper">
         <h1 class="title title--big">Конструктор пиццы</h1>
         <BuilderDoughSelector
-          :dough="doughList"
-          @changeDough="currentDough = $event"
-          :changeDough="currentDough"
+          @setCurrent="setCurrentDough"
+          :doughPizza="dough"
         />
-        <BuilderSizeSelector
-          :sizes="sizesList"
-          :sizePizza="currentSize"
-          @changeSize="currentSize = $event"
-        />
+        <BuilderSizeSelector :sizePizza="size" @setCurrent="setCurrentSize" />
         <BuilderIngredientsSelector
-          :sauces="saucesList"
           :ingredients="ingredientsList"
-          :currentSauce="currentSauce"
-          @setCurrentSauce="currentSauce = $event"
+          :saucePizza="sauce"
+          @setCurrentSauce="setCurrentSauce"
           @setIngredient="addIngredient"
-          @removeIngredient="removeIngredient"
+          @deleteIngredient="deleteIngredient"
         />
         <BuilderPizzaView
-          :name="namePizza"
-          @setNamePizza="namePizza = $event"
-          @setIngredient="addIngredient"
+          @addIngredient="addIngredient"
           :ingredients="ingredientsList"
-          :sauce="getSauce"
-          :typeDough="getDough"
-          :size="getSize"
+          :sauce="sauce"
+          :dough="dough"
+          :size="size"
         />
       </div>
     </form>
@@ -41,13 +33,12 @@ import BuilderDoughSelector from "@/modules/builder/components/BuilderDoughSelec
 import BuilderSizeSelector from "@/modules/builder/components/BuilderSizeSelector";
 import BuilderPizzaView from "@/modules/builder/components/BuilderPizzaView";
 import BuilderIngredientsSelector from "@/modules/builder/components/BuilderIngredientsSelector";
+import { mapMutations, mapState } from "vuex";
 import {
-  normalizeDough,
-  normalizeIngredients,
-  normalizeSauces,
-  normalizeSizes,
-} from "@/common/helpers";
-import { dough, sizes, sauces, ingredients } from "@/static/pizza.json";
+  ADD_INGREDIENT,
+  DELETE_INGREDIENT,
+  SET_ENTITY,
+} from "@/store/mutations-type";
 
 export default {
   name: "IndexHome",
@@ -57,74 +48,47 @@ export default {
     BuilderDoughSelector,
     BuilderPizzaView,
   },
-
-  data() {
-    return {
-      doughList: null,
-      sizesList: null,
-      saucesList: null,
-      ingredientsList: null,
-      namePizza: "",
-      currentDough: null,
-      currentSize: null,
-      currentSauce: null,
-    };
-  },
-  created() {
-    this.addValue();
-    this.addCurrentElements();
-  },
   methods: {
-    addValue() {
-      this.doughList = normalizeDough(dough);
-      this.sizesList = normalizeSizes(sizes);
-      this.saucesList = normalizeSauces(sauces);
-      this.ingredientsList = normalizeIngredients(ingredients);
-    },
-    addCurrentElements() {
-      this.currentDough = normalizeDough(dough)[0].value;
-      this.currentSize = normalizeSizes(sizes)[1].value;
-      this.currentSauce = normalizeSauces(sauces)[0].value;
-    },
+    ...mapMutations("Builder", {
+      ADD_INGREDIENT,
+      DELETE_INGREDIENT,
+    }),
+    ...mapMutations({
+      setEntity: SET_ENTITY,
+    }),
     addIngredient(value) {
-      const idx = this.ingredientsList.findIndex((el) => el.value === value);
-      this.ingredientsList[idx].count++;
+      this.ADD_INGREDIENT(value);
     },
-    removeIngredient(value) {
-      const idx = this.ingredientsList.findIndex((el) => el.value === value);
-      if (this.ingredientsList[idx].count > 0) {
-        this.ingredientsList[idx].count--;
-      }
+    deleteIngredient(value) {
+      this.DELETE_INGREDIENT(value);
+    },
+    setCurrentSauce(value) {
+      this.setEntity({
+        module: "Orders",
+        entity: "sauce",
+        value,
+      });
+    },
+    setCurrentDough(value) {
+      this.setEntity({
+        module: "Orders",
+        entity: "dough",
+        value,
+      });
+    },
+    setCurrentSize(value) {
+      this.setEntity({
+        module: "Orders",
+        entity: "size",
+        value,
+      });
     },
   },
   computed: {
-    getDough() {
-      const idx = this.doughList.findIndex(
-        (el) => el.value === this.currentDough
-      );
-      return {
-        value: this.currentDough === "light" ? "small" : "big",
-        price: this.doughList[idx].price,
-      };
-    },
-    getSize() {
-      const idx = this.sizesList.findIndex(
-        (el) => el.value === this.currentSize
-      );
-      return {
-        value: this.currentSize,
-        multiplier: this.sizesList[idx].multiplier,
-      };
-    },
-    getSauce() {
-      const idx = this.saucesList.findIndex(
-        (el) => el.value === this.currentSauce
-      );
-      return {
-        value: this.currentSauce,
-        price: this.saucesList[idx].price,
-      };
-    },
+    ...mapState("Builder", {
+      ingredientsList: "ingredientsList",
+    }),
+    ...mapState("Orders", ["dough", "size", "sauce"]),
   },
 };
 </script>

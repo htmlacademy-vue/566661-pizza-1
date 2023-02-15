@@ -8,9 +8,14 @@
 
 <script>
 import AppLayout from "@/layouts/AppLayout";
+
 export default {
   name: "App",
   components: { AppLayout },
+  created() {
+    // fetch initial data
+    this.$store.dispatch("init");
+  },
 };
 </script>
 

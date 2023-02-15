@@ -11,7 +11,7 @@
       </router-link>
     </div>
     <div class="header__cart">
-      <router-link to="/cart">0 ₽</router-link>
+      <router-link to="/cart">{{ total }} ₽</router-link>
     </div>
     <div class="header__user">
       <router-link v-if="!isAuth" to="/login" class="header__login"
@@ -42,6 +42,8 @@
 
 <script>
 import user from "@/static/user.json";
+import { mapGetters } from "vuex";
+
 export default {
   name: "AppLayoutHeader",
   data() {
@@ -49,6 +51,9 @@ export default {
       isAuth: false,
       user,
     };
+  },
+  computed: {
+    ...mapGetters("Cart", ["total"]),
   },
 };
 </script>

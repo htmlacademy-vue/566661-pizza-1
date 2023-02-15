@@ -7,14 +7,14 @@
         <div class="ingredients__sauce">
           <p>Основной соус:</p>
           <RadioButton
-            v-for="sauce in sauces"
+            v-for="(sauce, k) in sauces"
             class="radio ingredients__input"
             :key="sauce.id"
             :value="sauce.value"
             name="sauce"
             :text="sauce.name"
-            :checked="sauce.value === currentSauce"
-            @myChange="$emit('setCurrentSauce', sauce.value)"
+            :checked="sauce.value === saucePizza.value"
+            @click.native="$emit('setCurrentSauce', sauces[k])"
           />
         </div>
         <div class="sheet__content ingredients">
@@ -37,8 +37,8 @@
                 </app-drag>
                 <ItemCounter
                   class="counter counter--orange ingredients__counter"
-                  @minusCount="$emit('removeIngredient', ingredient.value)"
-                  @plusCount="$emit('setIngredient', ingredient.value)"
+                  @decrement="$emit('deleteIngredient', ingredient.value)"
+                  @increment="$emit('setIngredient', ingredient.value)"
                   :value="ingredient.value"
                   :count="ingredient.count"
                 />
@@ -55,6 +55,8 @@
 import RadioButton from "@/common/components/RadioButton";
 import ItemCounter from "@/common/components/ItemCounter";
 import AppDrag from "@/common/components/AppDrag";
+import { mapState } from "vuex";
+
 export default {
   name: "BuilderIngredientsSelector",
   components: {
@@ -63,18 +65,19 @@ export default {
     AppDrag,
   },
   props: {
-    sauces: {
-      type: Array,
-      required: true,
-    },
     ingredients: {
       type: Array,
       required: true,
     },
-    currentSauce: {
-      type: String,
+    saucePizza: {
+      type: Object,
       required: true,
     },
+  },
+  computed: {
+    ...mapState("Builder", {
+      sauces: "sauceList",
+    }),
   },
 };
 </script>

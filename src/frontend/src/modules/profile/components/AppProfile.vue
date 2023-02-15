@@ -24,7 +24,8 @@
 import AppProfileUser from "./AppProfileUser";
 import user from "@/static/user.json";
 import AppProfileAdressCurrent from "./AppProfileAdressCurrent";
-import AppProfileAdressForm from "./AppProfileAdressForm";
+import AppProfileAdressForm from "./AppProfileAddressForm.vue";
+
 export default {
   name: "AppProfile",
   data() {

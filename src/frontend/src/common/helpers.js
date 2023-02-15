@@ -1,4 +1,4 @@
-import { SAUCE_LIST, SIZE_LIST, DOUGH_LIST } from "@/common/constants";
+import { DOUGH_LIST, SAUCE_LIST, SIZE_LIST } from "@/common/constants";
 
 // из поля image получает имя ингедиента
 export const normalizeIngredients = (ingredients) => {
@@ -35,4 +35,8 @@ export const normalizeDough = (dough) => {
     ...doughItem,
     value: DOUGH_LIST.find(({ name }) => doughItem.name === name)?.value,
   }));
+};
+
+export const capitalize = (str) => {
+  return `${str[0].toUpperCase()}${str.slice(1)}`;
 };

@@ -6,6 +6,7 @@
 
 <script>
 import AppCart from "../modules/cart/components/AppCart";
+
 export default {
   name: "Cart",
   components: { AppCart },

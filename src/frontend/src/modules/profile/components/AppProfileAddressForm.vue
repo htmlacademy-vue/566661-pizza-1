@@ -1,7 +1,7 @@
 <template>
   <div class="layout__address">
     <form
-      action="test.html"
+      action="#"
       method="post"
       class="address-form address-form--opened sheet"
     >
@@ -77,6 +77,6 @@
 
 <script>
 export default {
-  name: "AppProfileAdressForm",
+  name: "AppProfileAddressForm",
 };
 </script>

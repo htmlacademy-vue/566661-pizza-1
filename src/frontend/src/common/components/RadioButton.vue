@@ -6,7 +6,6 @@
       :value="value"
       class="visually-hidden"
       :checked="checked"
-      @change="$emit('myChange', value)"
     />
     <span>{{ text }}</span>
   </label>

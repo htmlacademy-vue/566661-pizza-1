@@ -18,6 +18,12 @@ export default [
     meta: { layout: "AppLayoutDefault" },
   },
   {
+    path: "/modal",
+    name: "Modal",
+    component: () => import("../views/Modal"),
+    meta: { layout: "AppLayoutDefault" },
+  },
+  {
     path: "/my-profile",
     name: "Profile",
     component: () => import("../views/Profile"),

@@ -1,5 +1,5 @@
 <template>
-  <form action="test.html" method="post" class="layout-form">
+  <form method="post" class="layout-form">
     <main class="content cart">
       <div class="container">
         <div class="cart__title">
@@ -12,7 +12,7 @@
 
         <AppCartList />
 
-        <AppCartListAdditional />
+        <AppCartListAdditional :misc="misc" />
 
         <AppCartForm />
       </div>
@@ -27,11 +27,13 @@
         Перейти к конструктору<br />чтоб собрать ещё одну пиццу
       </p>
       <div class="footer__price">
-        <b>Итого: 2 228 ₽</b>
+        <b>Итого: {{ total }} ₽</b>
       </div>
 
       <div class="footer__submit">
-        <button type="submit" class="button">Оформить заказ</button>
+        <button type="submit" class="button">
+          <router-link :to="{ name: 'modal' }">Оформить заказ</router-link>
+        </button>
       </div>
     </section>
   </form>
@@ -41,14 +43,16 @@
 import AppCartListAdditional from "./AppCartListAdditional";
 import AppCartList from "./AppCartList";
 import AppCartForm from "./AppCartForm";
-import misc from "@/static/misc.json";
+import { mapGetters, mapState } from "vuex";
+
 export default {
   name: "AppCart",
   components: { AppCartList, AppCartListAdditional, AppCartForm },
-  data() {
-    return {
-      misc,
-    };
+  computed: {
+    ...mapGetters("Cart", ["total"]),
+    ...mapState("Cart", {
+      misc: "additional",
+    }),
   },
 };
 </script>
