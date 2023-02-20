@@ -32,7 +32,7 @@
 
       <div class="footer__submit">
         <button type="submit" class="button">
-          <router-link :to="{ name: 'modal' }">Оформить заказ</router-link>
+          <router-link :to="{ name: 'Modal' }">Оформить заказ</router-link>
         </button>
       </div>
     </section>
