@@ -2,10 +2,13 @@
   <div class="cart__additional">
     <ul class="additional-list">
       <AppCartListAdditionalItem
-        v-for="misc in misc"
-        :key="misc.id"
+        v-for="(misc, idx) in misc"
+        :key="misc.id + idx"
         :name="misc.name"
         :image="misc.image"
+        :price="misc.price"
+        :count="misc.count"
+        :idx="idx"
       />
     </ul>
   </div>
@@ -13,16 +16,17 @@
 
 <script>
 import AppCartListAdditionalItem from "./AppCartListAdditionalItem";
-import misc from "@/static/misc.json";
+
 export default {
   name: "AppCartListAdditional",
-  data() {
-    return {
-      misc,
-    };
-  },
   components: {
     AppCartListAdditionalItem,
+  },
+  props: {
+    misc: {
+      type: Array,
+      required: false,
+    },
   },
 };
 </script>

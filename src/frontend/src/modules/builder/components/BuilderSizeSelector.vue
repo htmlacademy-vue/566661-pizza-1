@@ -5,14 +5,14 @@
     </div>
     <div class="sheet__content diameter">
       <RadioButton
-        v-for="size in sizes"
+        v-for="(size, k) in sizes"
         :class="`diameter__input diameter__input--${size.value}`"
         :key="size.id"
         :value="size.value"
         name="diameter"
-        :checked="size.value === sizePizza"
+        :checked="k === sizePizza.id - 1"
         :text="size.name"
-        @myChange="$emit('changeSize', size.value)"
+        @myChange="$emit('setCurrent', sizes[k])"
       />
     </div>
   </div>
@@ -20,25 +20,23 @@
 
 <script>
 import RadioButton from "@/common/components/RadioButton";
+import { mapState } from "vuex";
+
 export default {
   name: "BuilderSizeSelector",
-  data() {
-    return {
-      currentSize: this.sizes[1].value,
-    };
-  },
   props: {
-    sizes: {
-      type: Array,
-      required: true,
-    },
     sizePizza: {
-      type: String,
+      type: Object,
       required: true,
     },
   },
   components: {
     RadioButton,
+  },
+  computed: {
+    ...mapState("Builder", {
+      sizes: "sizesList",
+    }),
   },
 };
 </script>

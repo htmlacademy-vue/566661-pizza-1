@@ -4,7 +4,7 @@
     <button
       type="button"
       class="button"
-      :disabled="!isDisabled"
+      :disabled="isDisabled"
       @click="$emit('ready')"
     >
       Готовьте!
@@ -23,7 +23,7 @@ export default {
   },
   computed: {
     isDisabled() {
-      return this.price > 0;
+      return !(this.price > 0);
     },
   },
 };

@@ -12,10 +12,10 @@
     </label>
 
     <div class="content__constructor">
-      <app-drop @drop="$emit('setIngredient', $event.ingredient)">
+      <app-drop @drop="$emit('addIngredient', $event.ingredient)">
         <div
           class="pizza"
-          :class="`pizza--foundation--${typeDough.value}-${sauce.value}`"
+          :class="`pizza--foundation--${classDough}-${sauce.value}`"
         >
           <div class="pizza__wrapper">
             <template v-for="ingredient in ingredients">
@@ -30,13 +30,16 @@
       ></app-drop>
     </div>
 
-    <BuilderPriceCounter :price="price" @ready="total" />
+    <BuilderPriceCounter :price="price" @ready="addOrder" />
   </div>
 </template>
 
 <script>
 import BuilderPriceCounter from "@/modules/builder/components/BuilderPriceCounter";
 import AppDrop from "@/common/components/AppDrop";
+import { mapActions, mapMutations, mapState } from "vuex";
+import { RESET, SET_ENTITY } from "@/store/mutations-type";
+
 export default {
   name: "BuilderPizzaView",
   data() {
@@ -45,15 +48,11 @@ export default {
     };
   },
   props: {
-    name: {
-      type: String,
-      default: "",
-    },
     sauce: {
       type: Object,
       required: true,
     },
-    typeDough: {
+    dough: {
       type: Object,
       required: true,
     },
@@ -71,11 +70,36 @@ export default {
     AppDrop,
   },
   methods: {
-    setName() {
-      this.$emit("setNamePizza", this.namePizza);
-    },
-    total(val) {
-      this.ready = val;
+    ...mapActions({
+      init: "init",
+    }),
+    ...mapActions("Cart", ["post"]),
+    ...mapMutations({
+      setEntity: SET_ENTITY,
+      reset: RESET,
+    }),
+    addOrder() {
+      this.setEntity({
+        module: "Orders",
+        entity: "price",
+        value: this.price,
+      });
+      const id = this.pizza.length === 0 ? 0 : this.pizza.length;
+      this.post({
+        entity: "pizza",
+        value: {
+          id,
+          name: this.name,
+          dough: this.dough,
+          size: this.size,
+          sauce: this.sauce,
+          price: this.price,
+          count: 1,
+          ingredients: this.ingredients.filter((el) => el.count > 0),
+        },
+      });
+      this.reset();
+      this.init();
     },
     getPizzaClasses(ingredient, count) {
       return {
@@ -84,12 +108,22 @@ export default {
         "pizza__filling--third": count === 3,
       };
     },
+    setName() {
+      this.setEntity({
+        module: "Orders",
+        entity: "name",
+        value: this.namePizza,
+      });
+    },
   },
   computed: {
+    ...mapState("Cart", ["pizza"]),
+    ...mapState("Orders", ["name"]),
     price() {
-      /* eslint-disable */
-      return this.size.multiplier * (this.typeDough.price + this.sauce.price + this.countIngredients);
-      /* eslint-enable */
+      return (
+        this.size.multiplier *
+        (this.dough.price + this.sauce.price + this.countIngredients)
+      );
     },
     countIngredients() {
       let num = 0;
@@ -97,6 +131,9 @@ export default {
         num += item.count * item.price;
       });
       return num;
+    },
+    classDough() {
+      return this.dough.value === "light" ? "small" : "big";
     },
   },
 };

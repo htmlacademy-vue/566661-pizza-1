@@ -4,7 +4,7 @@
       type="button"
       class="counter__button counter__button--minus"
       :disabled="getCount"
-      @click="$emit('minusCount')"
+      @click="$emit('decrement')"
     >
       <span class="visually-hidden">{{ textBtnFirst }}</span>
     </button>
@@ -18,7 +18,7 @@
     <button
       type="button"
       class="counter__button counter__button--plus"
-      @click="$emit('plusCount')"
+      @click="$emit('increment')"
       :disabled="!isDisabled"
     >
       <span class="visually-hidden">{{ textBtnSecond }}</span>
