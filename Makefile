@@ -15,3 +15,6 @@ run_tests:
 run_server:
 	docker-compose down -v
 	docker-compose up backend
+
+dev:
+	docker-compose build && make start_project

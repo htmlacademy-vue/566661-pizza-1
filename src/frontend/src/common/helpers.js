@@ -1,4 +1,6 @@
 import { DOUGH_LIST, SAUCE_LIST, SIZE_LIST } from "@/common/constants";
+import resources from "@/common/enums/resources";
+import { AuthApiService, ReadOnlyApiService } from "@/services/api.service";
 
 // из поля image получает имя ингедиента
 export const normalizeIngredients = (ingredients) => {
@@ -39,4 +41,16 @@ export const normalizeDough = (dough) => {
 
 export const capitalize = (str) => {
   return `${str[0].toUpperCase()}${str.slice(1)}`;
+};
+
+export const createResources = () => {
+  return {
+    [resources.AUTH]: new AuthApiService(),
+    [resources.USERS]: new ReadOnlyApiService(resources.USERS),
+  };
+};
+
+export const setAuth = (store) => {
+  store.$api.auth.setAuthHeader();
+  store.dispatch("Auth/getMe");
 };
