@@ -11,50 +11,45 @@
       </router-link>
     </div>
     <div class="header__cart">
-      <router-link to="/cart">{{ total }} ₽</router-link>
+      <router-link to="/cart" v-if="isAuthenticated">{{ total }} ₽</router-link>
     </div>
     <div class="header__user">
-      <router-link v-if="!isAuth" to="/login" class="header__login"
+      <router-link v-if="!isAuthenticated" to="/login" class="header__login"
         ><span>Войти</span></router-link
       >
       <template v-else>
-        <a href="user-data.html">
+        <router-link :to="{ name: 'Profile' }">
           <picture>
-            <source
-              type="image/webp"
-              srcset="img/users/user5.webp 1x, img/users/user5@2x.webp 2x"
-            />
             <img
-              src="@/assets/img/users/user5.jpg"
-              srcset="@/assets/img/users/user5@2x.jpg"
-              alt="Василий Ложкин"
+              :src="getUserAttribute('avatar')"
+              :srcset="getUserAttribute('avatar')"
+              :alt="getUserAttribute('name')"
               width="32"
               height="32"
             />
           </picture>
-          <span>Василий Ложкин</span>
-        </a>
-        <a href="#" class="header__logout"><span>Выйти</span></a>
+          <span>{{ getUserAttribute("name") }}</span>
+        </router-link>
+        <button class="header__logout" @click="$logout">
+          <span>Выйти</span>
+        </button>
       </template>
     </div>
   </header>
 </template>
 
 <script>
-import user from "@/static/user.json";
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
+import { logout } from "@/common/mixins";
 
 export default {
   name: "AppLayoutHeader",
-  data() {
-    return {
-      isAuth: false,
-      user,
-    };
-  },
   computed: {
     ...mapGetters("Cart", ["total"]),
+    ...mapGetters("Auth", ["getUserAttribute"]),
+    ...mapState("Auth", ["isAuthenticated"]),
   },
+  mixins: [logout],
 };
 </script>
 

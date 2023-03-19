@@ -2,7 +2,6 @@ import Vue from "vue";
 import Vuex from "vuex";
 import modules from "@/store/modules";
 import builderStore from "@/store/modules/builder.store";
-import authStore from "@/store/modules/auth.store";
 import ordersStore from "@/store/modules/orders.store";
 
 import {
@@ -11,16 +10,18 @@ import {
   SET_ENTITY,
   UPDATE_ENTITY,
 } from "@/store/mutations-type";
+import vuexPlugins from "@/plugins/vuexPlugins";
 
 Vue.use(Vuex);
 
 let initialState = {
   Orders: ordersStore.state,
   Builder: builderStore.state,
-  Auth: authStore.state,
 };
 
-const state = () => ({});
+const state = () => ({
+  users: [],
+});
 
 const getters = {};
 
@@ -52,17 +53,23 @@ const mutations = {
       state[entity] = state[entity].filter((el) => el.id !== value);
     }
   },
-  [RESET](state) {
-    Object.keys(state).forEach((key) => {
-      Object.assign(state[key], initialState[key]);
-    });
+  [RESET]() {
+    // Object.keys(initialState).forEach((key) => {
+    //   console.log(initialState[key]);
+    //   Object.assign(state[key], initialState[key]);
+    // });
   },
 };
 
 const actions = {
   async init({ dispatch }) {
+    dispatch("fetchUsers");
     dispatch("Builder/query");
     dispatch("Cart/query");
+  },
+  async fetchUsers({ commit }) {
+    const users = await this.$api.users.query();
+    commit(SET_ENTITY, { module: null, entity: "users", value: users });
   },
 };
 
@@ -72,4 +79,5 @@ export default new Vuex.Store({
   mutations,
   actions,
   modules,
+  plugins: [vuexPlugins],
 });

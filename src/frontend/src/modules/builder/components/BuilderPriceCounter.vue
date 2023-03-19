@@ -13,6 +13,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "BuilderPriceCounter",
   props: {
@@ -22,8 +24,9 @@ export default {
     },
   },
   computed: {
+    ...mapState("Auth", ["isAuthenticated"]),
     isDisabled() {
-      return !(this.price > 0);
+      return !this.isAuthenticated;
     },
   },
 };
